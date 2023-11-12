@@ -321,7 +321,6 @@ pub fn process_csv_file(input_file: &str) -> Result<String, PolarsError> {
         col("idp_issueddate_iso"),
         col("idp_validtime_iso"),
         col("value"),
-        col("name"),
         col("requested_on"),
         // col("url"),
     ];
@@ -347,7 +346,7 @@ pub fn process_csv_file(input_file: &str) -> Result<String, PolarsError> {
         .filter(col("idp_issueddate_iso").eq(lit(latest_issued_date)))
         .filter(col("idp_validtime_iso").is_not_null())
         .sort_by_exprs(
-            vec![col("name"), col("idp_validtime_iso")],
+            vec![col("point_id"), col("idp_validtime_iso")],
             vec![false, false],
             false,
             false,
